@@ -1,0 +1,10 @@
+**/data/
+**/build/
+**/.gradle/
+**/out/
+**/.idea/
+*.iml
+.env
+.env.*
+!.env.example
+*.class
