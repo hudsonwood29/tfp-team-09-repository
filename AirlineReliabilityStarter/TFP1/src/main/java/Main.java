@@ -21,8 +21,8 @@ public class Main {
         } else {
             file = Path.of("data", "T_ONTIME_REPORTING.csv");
 
-            // AI helped me check both possible working directories.
-            // The second path matches the folder structure on my computer.
+            // AI helped check both possible working directories.
+            // The second path matches the folder structure on computer.
             if (!Files.isRegularFile(file)) {
                 file = Path.of(
                         "AirlineReliabilityStarter",

@@ -36,7 +36,7 @@ public class IgnavTest {
         System.out.print("Departure date (YYYY-MM-DD): ");
         String departureDate = scanner.nextLine().trim();
 
-// Check the inputs before sending an API request.
+        // Check the inputs before sending an API request.
         if (!origin.matches("[A-Z]{3}") ||
                 !destination.matches("[A-Z]{3}")) {
             System.out.println("Use three-letter airport codes, such as ORD and JFK.");
@@ -89,7 +89,7 @@ public class IgnavTest {
             return;
         }
 
-// Convert the response text into JSON we can read.
+        // Convert the response text into JSON we can read.
         JsonObject root = JsonParser.parseString(
                 response.body()
         ).getAsJsonObject();
