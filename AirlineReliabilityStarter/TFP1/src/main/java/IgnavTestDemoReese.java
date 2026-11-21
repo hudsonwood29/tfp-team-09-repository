@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.nio.file.Path;
 
 public class IgnavTestDemoReese {
 
@@ -97,6 +98,50 @@ public class IgnavTestDemoReese {
             System.out.println("No flight options found.");
             return;
         }
+
+        Path januaryCsv = Path.of(
+                "AirlineReliabilityStarter",
+                "TFP1",
+                "Data",
+                "T_ONTIME_REPORTING.csv"
+        );
+
+        RouteDelayPredictor routePredictor =
+                RouteDelayPredictor.train(januaryCsv);
+
+// AI helped connect Ignav segments to a route/time model
+// without assuming the marketing airline is the operating airline.
+        for (Itinerary itinerary : itineraries) {
+            System.out.println("\n" + itinerary);
+
+            for (FlightSegment segment : itinerary.getSegments()) {
+                RouteDelayPredictor.Result risk =
+                        routePredictor.predict(segment);
+
+                System.out.println("  " + segment);
+
+                if (risk.available()) {
+                    System.out.printf(
+                            "    Experimental 15+ minute arrival delay risk: %.1f%%%n",
+                            risk.probability() * 100
+                    );
+
+                    System.out.println(
+                            "    Route/time estimate only—not airline-specific."
+                    );
+                } else {
+                    System.out.println(
+                            "    Estimate unavailable: " + risk.message()
+                    );
+                }
+            }
+        }
+
+        System.out.println(
+                "\nDelay estimates apply to flights that operate "
+                        + "and are not diverted."
+        );
+
 
         System.out.println("\nFlight options found: " + itineraries.size());
 

@@ -89,6 +89,22 @@ public class IgnavTest {
             return;
         }
 
+        // Show one itinerary's actual fields so we can check the mapping.
+        JsonObject debugRoot =
+                JsonParser.parseString(response.body()).getAsJsonObject();
+
+        JsonArray debugTrips = debugRoot.getAsJsonArray("itineraries");
+
+        if (debugTrips != null && !debugTrips.isEmpty()) {
+            System.out.println("\nFIRST ITINERARY JSON:");
+            System.out.println(
+                    new com.google.gson.GsonBuilder()
+                            .setPrettyPrinting()
+                            .create()
+                            .toJson(debugTrips.get(0))
+            );
+        }
+
         // Convert the response text into JSON we can read.
         JsonObject root = JsonParser.parseString(
                 response.body()
